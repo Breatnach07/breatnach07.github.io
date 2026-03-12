@@ -17,6 +17,7 @@
             color: white;
             padding: 1rem;
             text-align: center;
+            position: relative;
         }
         nav {
             background-color: #444;
@@ -74,6 +75,7 @@
             margin-bottom: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            box-sizing: border-box;
         }
         .order-form button {
             background-color: #333;
@@ -86,12 +88,132 @@
         .order-form button:hover {
             background-color: #555;
         }
+
+        /* Basket icon */
+        .basket-btn {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: white;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .basket-count {
+            background-color: #e74c3c;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Basket modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 80px;
+        }
+        .modal-overlay.open {
+            display: flex;
+        }
+        .modal {
+            background: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        .modal h2 {
+            margin-top: 0;
+        }
+        .basket-item {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .basket-item-details {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 4px;
+        }
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        .basket-total {
+            font-weight: bold;
+            margin-top: 16px;
+            font-size: 1.1rem;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .btn-clear {
+            background-color: #999;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-checkout {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            flex: 1;
+            font-size: 1rem;
+        }
+        .btn-checkout:hover { background-color: #219150; }
+        .btn-clear:hover { background-color: #777; }
+        .empty-msg {
+            color: #999;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .added-msg {
+            color: #27ae60;
+            font-size: 0.9rem;
+            margin-top: 6px;
+            display: none;
+        }
     </style>
 </head>
 
 <body>
     <header>
         <h1>Eden Breatnach</h1>
+        <button class="basket-btn" onclick="openBasket()" title="View Basket">
+            🧺
+            <span class="basket-count" id="basket-count">0</span>
+        </button>
     </header>
     <nav>
         <a href="index.html">Home</a>
@@ -102,68 +224,186 @@
     <div class="container">
         <h2>3D-Printed Goods</h2>
         <p>Order custom 3D-printed items. Select from our available products below.</p>
-        
+
         <div class="product">
             <img src="placeholder-image.jpg" alt="Custom Keychain">
             <div class="product-info">
                 <h3>Custom Keychain</h3>
                 <p>Personalized keychain with your name or design. $5.00</p>
-                <form class="order-form">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required>
-                    
-                    <label for="design">Design Description:</label>
-                    <textarea id="design" name="design" rows="3" placeholder="Describe your custom design..."></textarea>
-                    
-                    <label for="quantity">Quantity:</label>
-                    <input type="number" id="quantity" name="quantity" min="1" value="1" required>
-                    
-                    <button type="submit">Order Now</button>
+                <form class="order-form" onsubmit="addToBasket(event, 'Custom Keychain', 5.00, this)">
+                    <label>Name:</label>
+                    <input type="text" name="name" required>
+
+                    <label>Design Description:</label>
+                    <textarea name="design" rows="3" placeholder="Describe your custom design..."></textarea>
+
+                    <label>Quantity:</label>
+                    <input type="number" name="quantity" min="1" value="1" required>
+
+                    <button type="submit">Add to Basket</button>
+                    <div class="added-msg">Added to basket!</div>
                 </form>
             </div>
         </div>
-        
+
         <div class="product">
             <img src="placeholder-image.jpg" alt="Phone Stand">
             <div class="product-info">
                 <h3>Phone Stand</h3>
                 <p>Adjustable phone stand for desk or bedside. $10.00</p>
-                <form class="order-form">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required>
-                    
-                    <label for="color">Color:</label>
-                    <select id="color" name="color">
+                <form class="order-form" onsubmit="addToBasket(event, 'Phone Stand', 10.00, this)">
+                    <label>Name:</label>
+                    <input type="text" name="name" required>
+
+                    <label>Color:</label>
+                    <select name="color">
                         <option value="black">Black</option>
                         <option value="white">White</option>
                         <option value="blue">Blue</option>
                     </select>
-                    
-                    <label for="quantity">Quantity:</label>
-                    <input type="number" id="quantity" name="quantity" min="1" value="1" required>
-                    
-                    <button type="submit">Order Now</button>
+
+                    <label>Quantity:</label>
+                    <input type="number" name="quantity" min="1" value="1" required>
+
+                    <button type="submit">Add to Basket</button>
+                    <div class="added-msg">Added to basket!</div>
                 </form>
             </div>
         </div>
-        
+
         <div class="product">
             <img src="placeholder-image.jpg" alt="Cable Organizer">
             <div class="product-info">
                 <h3>Cable Organizer</h3>
                 <p>Keep your cables tidy and organized. $8.00</p>
-                <form class="order-form">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required>
-                    
-                    <label for="quantity">Quantity:</label>
-                    <input type="number" id="quantity" name="quantity" min="1" value="1" required>
-                    
-                    <button type="submit">Order Now</button>
+                <form class="order-form" onsubmit="addToBasket(event, 'Cable Organizer', 8.00, this)">
+                    <label>Name:</label>
+                    <input type="text" name="name" required>
+
+                    <label>Quantity:</label>
+                    <input type="number" name="quantity" min="1" value="1" required>
+
+                    <button type="submit">Add to Basket</button>
+                    <div class="added-msg">Added to basket!</div>
                 </form>
             </div>
         </div>
     </div>
+
+    <!-- Basket Modal -->
+    <div class="modal-overlay" id="basket-modal" onclick="closeOnOverlay(event)">
+        <div class="modal">
+            <h2>🧺 Your Basket</h2>
+            <div id="basket-items"></div>
+            <div class="basket-total" id="basket-total"></div>
+            <div class="modal-actions">
+                <button class="btn-clear" onclick="clearBasket()">Clear Basket</button>
+                <button class="btn-checkout" onclick="checkout()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const COOKIE_NAME = 'basket';
+
+        function getBasket() {
+            const match = document.cookie.split('; ').find(r => r.startsWith(COOKIE_NAME + '='));
+            if (!match) return [];
+            try { return JSON.parse(decodeURIComponent(match.split('=').slice(1).join('='))); }
+            catch { return []; }
+        }
+
+        function saveBasket(basket) {
+            const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString();
+            document.cookie = COOKIE_NAME + '=' + encodeURIComponent(JSON.stringify(basket)) + '; expires=' + expires + '; path=/';
+            updateCount();
+        }
+
+        function updateCount() {
+            const basket = getBasket();
+            const total = basket.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('basket-count').textContent = total;
+        }
+
+        function addToBasket(event, productName, price, form) {
+            event.preventDefault();
+            const data = new FormData(form);
+            const quantity = parseInt(data.get('quantity')) || 1;
+            const details = {};
+            for (const [key, val] of data.entries()) {
+                if (key !== 'quantity' && val) details[key] = val;
+            }
+
+            const basket = getBasket();
+            basket.push({ product: productName, price, quantity, details, id: Date.now() });
+            saveBasket(basket);
+
+            const msg = form.querySelector('.added-msg');
+            msg.style.display = 'block';
+            setTimeout(() => msg.style.display = 'none', 2000);
+            form.reset();
+            form.querySelector('[name="quantity"]').value = 1;
+        }
+
+        function openBasket() {
+            const basket = getBasket();
+            const container = document.getElementById('basket-items');
+            const totalEl = document.getElementById('basket-total');
+
+            if (basket.length === 0) {
+                container.innerHTML = '<div class="empty-msg">Your basket is empty.</div>';
+                totalEl.textContent = '';
+            } else {
+                container.innerHTML = basket.map(item => {
+                    const detailStr = Object.entries(item.details).map(([k,v]) => k + ': ' + v).join(', ');
+                    return `<div class="basket-item">
+                        <div>
+                            <strong>${item.product}</strong> x${item.quantity} — $${(item.price * item.quantity).toFixed(2)}
+                            ${detailStr ? '<div class="basket-item-details">' + detailStr + '</div>' : ''}
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(${item.id})">✕</button>
+                    </div>`;
+                }).join('');
+
+                const total = basket.reduce((sum, item) => sum + item.price * item.quantity, 0);
+                totalEl.textContent = 'Total: $' + total.toFixed(2);
+            }
+
+            document.getElementById('basket-modal').classList.add('open');
+        }
+
+        function removeItem(id) {
+            const basket = getBasket().filter(item => item.id !== id);
+            saveBasket(basket);
+            openBasket();
+        }
+
+        function clearBasket() {
+            saveBasket([]);
+            openBasket();
+        }
+
+        function closeOnOverlay(event) {
+            if (event.target === document.getElementById('basket-modal')) {
+                document.getElementById('basket-modal').classList.remove('open');
+            }
+        }
+
+        function checkout() {
+            const basket = getBasket();
+            if (basket.length === 0) { alert('Your basket is empty.'); return; }
+            const summary = basket.map(item => {
+                const detailStr = Object.entries(item.details).map(([k,v]) => k + ': ' + v).join(', ');
+                return item.product + ' x' + item.quantity + (detailStr ? ' (' + detailStr + ')' : '');
+            }).join('\n');
+            const total = basket.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            alert('Order Summary:\n\n' + summary + '\n\nTotal: $' + total.toFixed(2) + '\n\nThank you! We will be in touch to confirm your order.');
+            clearBasket();
+            document.getElementById('basket-modal').classList.remove('open');
+        }
+
+        updateCount();
+    </script>
 </body>
 
 </html>
