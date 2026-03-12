@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eden Breatnach - Tutor Sessions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        nav {
+            background-color: #444;
+            overflow: hidden;
+        }
+        nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        .day-section {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+        .day-section h3 {
+            margin-top: 0;
+            font-size: 1.3em;
+            border-bottom: 2px solid #333;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+        }
+        .slots {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .slot {
+            border: 2px solid #333;
+            border-radius: 6px;
+            padding: 12px 20px;
+            cursor: pointer;
+            background: white;
+            font-size: 1em;
+            transition: background 0.2s, color 0.2s;
+            user-select: none;
+        }
+        .slot:hover {
+            background: #333;
+            color: white;
+        }
+        .slot.selected {
+            background: #333;
+            color: white;
+        }
+        .slot.booked {
+            background: #ccc;
+            color: #888;
+            border-color: #ccc;
+            cursor: not-allowed;
+        }
+        .booking-form {
+            display: none;
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            margin-top: 24px;
+        }
+        .booking-form h3 {
+            margin-top: 0;
+        }
+        .booking-form label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: bold;
+            margin-top: 14px;
+        }
+        .booking-form input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        .summary {
+            background: #f4f4f4;
+            border-radius: 6px;
+            padding: 14px 18px;
+            margin-top: 18px;
+            font-size: 1em;
+        }
+        .summary span {
+            font-weight: bold;
+        }
+        .btn-confirm {
+            margin-top: 18px;
+            width: 100%;
+            padding: 14px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+        }
+        .btn-confirm:hover {
+            background: #555;
+        }
+        .confirmation-msg {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 6px;
+            padding: 16px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Eden Breatnach</h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="3d-printed-goods.html">3D-Printed Goods</a>
+        <a href="about-me.html">About Me</a>
+        <a href="projects.html">Projects</a>
+        <a href="tutor-sessions.html">Tutor Sessions</a>
+    </nav>
+    <div class="container">
+        <h2>Maths Grinds</h2>
+        <p class="subtitle">One-to-one maths tutoring &mdash; €18 per session &mdash; Select a slot to book</p>
+
+        <div class="day-section">
+            <h3>Saturday</h3>
+            <div class="slots">
+                <div class="slot" data-day="Saturday" data-time="9:00am" onclick="selectSlot(this)">9:00am</div>
+                <div class="slot" data-day="Saturday" data-time="10:00am" onclick="selectSlot(this)">10:00am</div>
+                <div class="slot" data-day="Saturday" data-time="11:00am" onclick="selectSlot(this)">11:00am</div>
+            </div>
+        </div>
+
+        <div class="day-section">
+            <h3>Sunday</h3>
+            <div class="slots">
+                <div class="slot" data-day="Sunday" data-time="9:00am" onclick="selectSlot(this)">9:00am</div>
+                <div class="slot" data-day="Sunday" data-time="10:00am" onclick="selectSlot(this)">10:00am</div>
+                <div class="slot" data-day="Sunday" data-time="11:00am" onclick="selectSlot(this)">11:00am</div>
+            </div>
+        </div>
+
+        <div class="booking-form" id="bookingForm">
+            <h3>Book Your Slot</h3>
+            <p id="selectedSlotDisplay" style="color:#555;"></p>
+
+            <label for="studentName">Your Name</label>
+            <input type="text" id="studentName" placeholder="Full name">
+
+            <label for="studentEmail">Your Email</label>
+            <input type="email" id="studentEmail" placeholder="email@example.com">
+
+            <label for="studentPhone">Phone Number</label>
+            <input type="tel" id="studentPhone" placeholder="+353...">
+
+            <div class="summary">
+                Session: <span id="summarySlot">—</span><br>
+                Price: <span>€18.00</span>
+            </div>
+
+            <button class="btn-confirm" onclick="confirmBooking()">Confirm Booking</button>
+        </div>
+
+        <div class="confirmation-msg" id="confirmationMsg"></div>
+    </div>
+
+    <script>
+        let selectedSlot = null;
+
+        function selectSlot(el) {
+            if (el.classList.contains('booked')) return;
+
+            // Deselect previous
+            document.querySelectorAll('.slot.selected').forEach(s => s.classList.remove('selected'));
+
+            el.classList.add('selected');
+            selectedSlot = { day: el.dataset.day, time: el.dataset.time, el };
+
+            const form = document.getElementById('bookingForm');
+            form.style.display = 'block';
+            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            const label = selectedSlot.day + ' at ' + selectedSlot.time;
+            document.getElementById('selectedSlotDisplay').textContent = 'Slot: ' + label;
+            document.getElementById('summarySlot').textContent = label;
+        }
+
+        function confirmBooking() {
+            const name = document.getElementById('studentName').value.trim();
+            const email = document.getElementById('studentEmail').value.trim();
+            const phone = document.getElementById('studentPhone').value.trim();
+
+            if (!name || !email || !phone) {
+                alert('Please fill in all fields.');
+                return;
+            }
+            if (!selectedSlot) {
+                alert('Please select a time slot.');
+                return;
+            }
+
+            // Mark slot as booked
+            selectedSlot.el.classList.remove('selected');
+            selectedSlot.el.classList.add('booked');
+            selectedSlot.el.textContent = selectedSlot.time + ' ✓';
+
+            // Save booking to localStorage
+            const bookings = JSON.parse(localStorage.getItem('tutorBookings') || '[]');
+            bookings.push({
+                name, email, phone,
+                day: selectedSlot.day,
+                time: selectedSlot.time,
+                bookedAt: new Date().toISOString()
+            });
+            localStorage.setItem('tutorBookings', JSON.stringify(bookings));
+
+            // Show confirmation
+            const msg = document.getElementById('confirmationMsg');
+            msg.style.display = 'block';
+            msg.innerHTML = `Booking confirmed!<br><strong>${name}</strong> &mdash; ${selectedSlot.day} at ${selectedSlot.time}<br>A confirmation will be sent to <strong>${email}</strong>.`;
+
+            document.getElementById('bookingForm').style.display = 'none';
+            selectedSlot = null;
+        }
+
+        // Mark already-booked slots on page load
+        window.addEventListener('load', () => {
+            const bookings = JSON.parse(localStorage.getItem('tutorBookings') || '[]');
+            bookings.forEach(b => {
+                document.querySelectorAll('.slot').forEach(el => {
+                    if (el.dataset.day === b.day && el.dataset.time === b.time) {
+                        el.classList.add('booked');
+                        el.textContent = el.dataset.time + ' ✓';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
