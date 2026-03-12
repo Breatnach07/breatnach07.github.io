@@ -229,10 +229,17 @@
             <img src="placeholder-image.jpg" alt="Custom Keychain">
             <div class="product-info">
                 <h3>Custom Keychain</h3>
-                <p>Personalized keychain with your name or design. $5.00</p>
+                <p>A plain disk keychain with any text or image embossed on it — fully customisable. $5.00</p>
                 <form class="order-form" onsubmit="addToBasket(event, 'Custom Keychain', 5.00, this)">
+                    <label>Colour:</label>
+                    <select name="colour">
+                        <option value="silver">Silver</option>
+                        <option value="yellow">Yellow</option>
+                        <option value="black">Black</option>
+                    </select>
+
                     <label>Design Description:</label>
-                    <textarea name="design" rows="3" placeholder="Describe your custom design..."></textarea>
+                    <textarea name="design" rows="3" placeholder="Describe the text or image to emboss..."></textarea>
 
                     <label>Quantity:</label>
                     <input type="number" name="quantity" min="1" value="1" required>
@@ -250,10 +257,12 @@
                 <p>Adjustable phone stand for desk or bedside. $10.00</p>
                 <form class="order-form" onsubmit="addToBasket(event, 'Phone Stand', 10.00, this)">
                     <label>Color:</label>
-                    <select name="color">
+                    <select name="colour">
                         <option value="black">Black</option>
                         <option value="white">White</option>
                         <option value="blue">Blue</option>
+                        <option value="red">Red</option>
+                        <option value="yellow">Yellow</option>
                     </select>
 
                     <label>Quantity:</label>
@@ -271,6 +280,12 @@
                 <h3>Cable Organizer</h3>
                 <p>Keep your cables tidy and organized. $8.00</p>
                 <form class="order-form" onsubmit="addToBasket(event, 'Cable Organizer', 8.00, this)">
+                    <label>Colour:</label>
+                    <select name="colour">
+                        <option value="black">Black</option>
+                        <option value="white">White</option>
+                    </select>
+
                     <label>Quantity:</label>
                     <input type="number" name="quantity" min="1" value="1" required>
 

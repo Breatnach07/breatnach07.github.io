@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eden Breatnach - About Me</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        nav {
+            background-color: #444;
+            overflow: hidden;
+        }
+        nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .container {
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .profile {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+        .profile-text h2 {
+            margin-top: 0;
+            font-size: 1.8em;
+        }
+        .profile-text .subtitle {
+            color: #555;
+            font-size: 1em;
+            margin-bottom: 12px;
+        }
+        .profile-text p {
+            color: #444;
+            line-height: 1.6;
+        }
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .contact-links a {
+            display: inline-block;
+            padding: 8px 14px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .contact-links a:hover {
+            background-color: #555;
+        }
+        .section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 24px 30px;
+            margin-bottom: 24px;
+        }
+        .section h3 {
+            margin-top: 0;
+            border-bottom: 2px solid #f4f4f4;
+            padding-bottom: 10px;
+            color: #333;
+        }
+        .edu-entry, .work-entry {
+            margin-bottom: 20px;
+        }
+        .edu-entry:last-child, .work-entry:last-child {
+            margin-bottom: 0;
+        }
+        .edu-entry h4, .work-entry h4 {
+            margin: 0 0 4px 0;
+            color: #333;
+        }
+        .edu-entry .date, .work-entry .date {
+            font-size: 0.85em;
+            color: #888;
+            margin-bottom: 6px;
+        }
+        .edu-entry p, .work-entry p {
+            margin: 4px 0;
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        .skill-group h4 {
+            margin: 0 0 8px 0;
+            color: #333;
+            font-size: 0.95em;
+        }
+        .skill-group ul {
+            margin: 0;
+            padding-left: 18px;
+            color: #555;
+            font-size: 0.9em;
+            line-height: 1.8;
+        }
+        .achievements-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .achievements-list li {
+            padding: 6px 0;
+            border-bottom: 1px solid #f4f4f4;
+            color: #555;
+            font-size: 0.95em;
+        }
+        .achievements-list li:last-child {
+            border-bottom: none;
+        }
+        .achievements-list li::before {
+            content: "🏆 ";
+        }
+        @media (max-width: 600px) {
+            .profile { flex-direction: column; }
+            .skills-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Eden Breatnach</h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="3d-printed-goods.html">3D-Printed Goods</a>
+        <a href="about-me.html">About Me</a>
+        <a href="projects.html">Projects</a>
+    </nav>
+    <div class="container">
+
+        <div class="profile">
+            <div class="profile-text">
+                <h2>Cillian (Éidín) Welsh</h2>
+                <div class="subtitle">Engineering — Trinity College Dublin (M.A.I) &nbsp;|&nbsp; Naughton Scholar 2025</div>
+                <p>Curious, reliable, and eager to collaborate on innovative engineering projects that blend theory and design. I'm a motivated aspiring engineer with a strong foundation in CAD, programming, and hands-on problem-solving — and I enjoy applying my technical skills to real-world challenges.</p>
+                <div class="contact-links">
+                    <a href="mailto:Breatnach07@gmail.com">Breatnach07@gmail.com</a>
+                    <a href="mailto:WelshCi@tcd.ie">WelshCi@tcd.ie</a>
+                    <a href="https://linkedin.com/in/breatnach07" target="_blank">LinkedIn</a>
+                    <a href="https://github.com/Breatnach07" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Education</h3>
+            <div class="edu-entry">
+                <h4>Masters in Engineering (M.A.I) — Trinity College Dublin</h4>
+                <div class="date">2025 – 2030</div>
+                <p>5-year integrated master's degree, aiming to specialise in Electronic Engineering.</p>
+                <p><strong>Societies:</strong> Physics, Maths, Engineering, An Cumann Gaelach</p>
+            </div>
+            <div class="edu-entry">
+                <h4>Leaving Certificate — St. Olivers Community College</h4>
+                <div class="date">2019 – 2025</div>
+                <p><strong>Results:</strong> 625/625 CAO Points &nbsp;|&nbsp; 6 Subject Awards &nbsp;|&nbsp; Students' Student of the Year</p>
+                <p><strong>Subjects:</strong> Applied Maths (H1), Physics (H1), Technology (H1), Engineering (H1), Maths (H1), Gaeilge (H1), Spanish (H2), English (H4)</p>
+                <p><strong>Extracurricular:</strong> AMTCE 3D-Printing & Design Competition, Irish Maths Olympiad (Round 1+), Regional Team Maths Winner — National Finalist</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Achievements</h3>
+            <ul class="achievements-list">
+                <li>Naughton Scholarship 2025</li>
+                <li>ETTA Regional Winner 2025 — National Pending</li>
+                <li>625/625 Leaving Certificate</li>
+                <li>Mathematics Award — 5th & 6th Year</li>
+                <li>An Gaeilge Award — 5th & 6th Year</li>
+                <li>Applied Mathematics Award — 6th Year</li>
+                <li>Technology Award — 6th Year</li>
+                <li>Engineering Award — 6th Year</li>
+                <li>Named Students' Student of the Year</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>Technical Skills</h3>
+            <div class="skills-grid">
+                <div class="skill-group">
+                    <h4>CAD Design</h4>
+                    <ul>
+                        <li>SolidWorks</li>
+                        <li>Onshape</li>
+                    </ul>
+                </div>
+                <div class="skill-group">
+                    <h4>Programming</h4>
+                    <ul>
+                        <li>Python</li>
+                        <li>Arduino (C++)</li>
+                        <li>Kotlin</li>
+                    </ul>
+                </div>
+                <div class="skill-group">
+                    <h4>Electronics</h4>
+                    <ul>
+                        <li>Breadboarding</li>
+                        <li>Soldering</li>
+                        <li>Sensor Integration</li>
+                    </ul>
+                </div>
+                <div class="skill-group">
+                    <h4>Software</h4>
+                    <ul>
+                        <li>Microsoft Office</li>
+                        <li>Google Workspace</li>
+                        <li>Canva</li>
+                    </ul>
+                </div>
+                <div class="skill-group">
+                    <h4>Soft Skills</h4>
+                    <ul>
+                        <li>Problem-solving</li>
+                        <li>Teamwork</li>
+                        <li>Time management</li>
+                        <li>Adaptable</li>
+                    </ul>
+                </div>
+                <div class="skill-group">
+                    <h4>Languages</h4>
+                    <ul>
+                        <li>English (Fluent)</li>
+                        <li>Irish (Proficient)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Work Experience</h3>
+            <div class="work-entry">
+                <h4>Passenger Service Agent — Sky Handling Partner, Dublin Airport</h4>
+                <div class="date">July 2025 – September 2025</div>
+                <p>Assisted passengers with check-in, boarding, and baggage. Ensured compliance with security and safety procedures. Maintained clear, calm, and professional communication throughout.</p>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
