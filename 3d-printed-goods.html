@@ -229,7 +229,7 @@
             <img src="placeholder-image.jpg" alt="Custom Keychain">
             <div class="product-info">
                 <h3>Custom Keychain</h3>
-                <p>A plain disk keychain with any text or image embossed on it — fully customisable. $5.00</p>
+                <p>A plain disk keychain with any text or image embossed on it — fully customisable. €5.00</p>
                 <form class="order-form" onsubmit="addToBasket(event, 'Custom Keychain', 5.00, this)">
                     <label>Colour:</label>
                     <select name="colour">
@@ -254,7 +254,7 @@
             <img src="placeholder-image.jpg" alt="Phone Stand">
             <div class="product-info">
                 <h3>Phone Stand</h3>
-                <p>Adjustable phone stand for desk or bedside. $10.00</p>
+                <p>Adjustable phone stand for desk or bedside. €10.00</p>
                 <form class="order-form" onsubmit="addToBasket(event, 'Phone Stand', 10.00, this)">
                     <label>Color:</label>
                     <select name="colour">
@@ -278,7 +278,7 @@
             <img src="placeholder-image.jpg" alt="Cable Organizer">
             <div class="product-info">
                 <h3>Cable Organizer</h3>
-                <p>Keep your cables tidy and organized. $8.00</p>
+                <p>Keep your cables tidy and organized. €8.00</p>
                 <form class="order-form" onsubmit="addToBasket(event, 'Cable Organizer', 8.00, this)">
                     <label>Colour:</label>
                     <select name="colour">
@@ -306,6 +306,69 @@
                 <button class="btn-clear" onclick="clearBasket()">Clear Basket</button>
                 <button class="btn-checkout" onclick="checkout()">Proceed to Checkout</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="modal-overlay" id="checkout-modal" onclick="closeCheckoutOnOverlay(event)">
+        <div class="modal">
+            <h2>📦 Checkout</h2>
+            <form id="checkout-form" onsubmit="submitOrder(event)">
+                <label style="display:block;margin-bottom:5px">Full Name:</label>
+                <input type="text" id="co-name" required style="width:100%;padding:8px;margin-bottom:12px;border:1px solid #ddd;border-radius:4px;box-sizing:border-box">
+
+                <label style="display:block;margin-bottom:5px">Country:</label>
+                <select id="co-country" required onchange="updateCheckoutTotal()" style="width:100%;padding:8px;margin-bottom:12px;border:1px solid #ddd;border-radius:4px;box-sizing:border-box">
+                    <option value="">— Select country —</option>
+                    <optgroup label="Ireland">
+                        <option value="IE" data-shipping="4">Ireland</option>
+                    </optgroup>
+                    <optgroup label="European Union">
+                        <option value="AT" data-shipping="8">Austria</option>
+                        <option value="BE" data-shipping="8">Belgium</option>
+                        <option value="BG" data-shipping="8">Bulgaria</option>
+                        <option value="HR" data-shipping="8">Croatia</option>
+                        <option value="CY" data-shipping="8">Cyprus</option>
+                        <option value="CZ" data-shipping="8">Czech Republic</option>
+                        <option value="DK" data-shipping="8">Denmark</option>
+                        <option value="EE" data-shipping="8">Estonia</option>
+                        <option value="FI" data-shipping="8">Finland</option>
+                        <option value="FR" data-shipping="8">France</option>
+                        <option value="DE" data-shipping="8">Germany</option>
+                        <option value="GR" data-shipping="8">Greece</option>
+                        <option value="HU" data-shipping="8">Hungary</option>
+                        <option value="IT" data-shipping="8">Italy</option>
+                        <option value="LV" data-shipping="8">Latvia</option>
+                        <option value="LT" data-shipping="8">Lithuania</option>
+                        <option value="LU" data-shipping="8">Luxembourg</option>
+                        <option value="MT" data-shipping="8">Malta</option>
+                        <option value="NL" data-shipping="8">Netherlands</option>
+                        <option value="PL" data-shipping="8">Poland</option>
+                        <option value="PT" data-shipping="8">Portugal</option>
+                        <option value="RO" data-shipping="8">Romania</option>
+                        <option value="SK" data-shipping="8">Slovakia</option>
+                        <option value="SI" data-shipping="8">Slovenia</option>
+                        <option value="ES" data-shipping="8">Spain</option>
+                        <option value="SE" data-shipping="8">Sweden</option>
+                    </optgroup>
+                    <optgroup label="United Kingdom">
+                        <option value="GB" data-shipping="8">United Kingdom</option>
+                    </optgroup>
+                    <optgroup label="United States">
+                        <option value="US" data-shipping="12.50">United States</option>
+                    </optgroup>
+                </select>
+
+                <label style="display:block;margin-bottom:5px">Address:</label>
+                <textarea id="co-address" rows="3" required placeholder="Street, City, Postcode" style="width:100%;padding:8px;margin-bottom:12px;border:1px solid #ddd;border-radius:4px;box-sizing:border-box"></textarea>
+
+                <div id="co-summary" style="background:#f9f9f9;border-radius:6px;padding:12px;margin-bottom:12px;font-size:0.9em;color:#444;display:none"></div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-clear" onclick="document.getElementById('checkout-modal').classList.remove('open')">Back</button>
+                    <button type="submit" class="btn-checkout">Place Order</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -364,7 +427,7 @@
                     const detailStr = Object.entries(item.details).map(([k,v]) => k + ': ' + v).join(', ');
                     return `<div class="basket-item">
                         <div>
-                            <strong>${item.product}</strong> x${item.quantity} — $${(item.price * item.quantity).toFixed(2)}
+                            <strong>${item.product}</strong> x${item.quantity} — €${(item.price * item.quantity).toFixed(2)}
                             ${detailStr ? '<div class="basket-item-details">' + detailStr + '</div>' : ''}
                         </div>
                         <button class="remove-btn" onclick="removeItem(${item.id})">✕</button>
@@ -372,7 +435,7 @@
                 }).join('');
 
                 const total = basket.reduce((sum, item) => sum + item.price * item.quantity, 0);
-                totalEl.textContent = 'Total: $' + total.toFixed(2);
+                totalEl.textContent = 'Subtotal: €' + total.toFixed(2);
             }
 
             document.getElementById('basket-modal').classList.add('open');
@@ -395,17 +458,68 @@
             }
         }
 
+        function closeCheckoutOnOverlay(event) {
+            if (event.target === document.getElementById('checkout-modal')) {
+                document.getElementById('checkout-modal').classList.remove('open');
+            }
+        }
+
         function checkout() {
             const basket = getBasket();
             if (basket.length === 0) { alert('Your basket is empty.'); return; }
-            const summary = basket.map(item => {
-                const detailStr = Object.entries(item.details).map(([k,v]) => k + ': ' + v).join(', ');
-                return item.product + ' x' + item.quantity + (detailStr ? ' (' + detailStr + ')' : '');
-            }).join('\n');
-            const total = basket.reduce((sum, item) => sum + item.price * item.quantity, 0);
-            alert('Order Summary:\n\n' + summary + '\n\nTotal: $' + total.toFixed(2) + '\n\nThank you! We will be in touch to confirm your order.');
-            clearBasket();
             document.getElementById('basket-modal').classList.remove('open');
+            document.getElementById('checkout-form').reset();
+            document.getElementById('co-summary').style.display = 'none';
+            document.getElementById('checkout-modal').classList.add('open');
+        }
+
+        function updateCheckoutTotal() {
+            const select = document.getElementById('co-country');
+            const selected = select.options[select.selectedIndex];
+            const shipping = selected.dataset.shipping ? parseFloat(selected.dataset.shipping) : null;
+            const basket = getBasket();
+            const subtotal = basket.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            const summaryEl = document.getElementById('co-summary');
+
+            if (shipping === null) {
+                summaryEl.style.display = 'none';
+                return;
+            }
+
+            const total = subtotal + shipping;
+            const itemLines = basket.map(item => {
+                const detailStr = Object.entries(item.details).map(([k,v]) => v).join(', ');
+                return `<div style="display:flex;justify-content:space-between"><span>${item.product} x${item.quantity}${detailStr ? ' ('+detailStr+')' : ''}</span><span>€${(item.price * item.quantity).toFixed(2)}</span></div>`;
+            }).join('');
+
+            summaryEl.innerHTML = itemLines +
+                `<div style="display:flex;justify-content:space-between;margin-top:8px"><span>Shipping to ${selected.text}</span><span>€${shipping.toFixed(2)}</span></div>` +
+                `<div style="display:flex;justify-content:space-between;margin-top:8px;font-weight:bold;border-top:1px solid #ddd;padding-top:8px"><span>Total</span><span>€${total.toFixed(2)}</span></div>`;
+            summaryEl.style.display = 'block';
+        }
+
+        function submitOrder(event) {
+            event.preventDefault();
+            const name = document.getElementById('co-name').value.trim();
+            const address = document.getElementById('co-address').value.trim();
+            const select = document.getElementById('co-country');
+            const country = select.options[select.selectedIndex].text;
+            const shipping = parseFloat(select.options[select.selectedIndex].dataset.shipping);
+            const basket = getBasket();
+            const subtotal = basket.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            const total = subtotal + shipping;
+
+            const itemLines = basket.map(item => {
+                const detailStr = Object.entries(item.details).map(([k,v]) => k + ': ' + v).join(', ');
+                return `- ${item.product} x${item.quantity}${detailStr ? ' ('+detailStr+')' : ''} = €${(item.price * item.quantity).toFixed(2)}`;
+            }).join('\n');
+
+            const body = `New Order from Eden Breatnach site\n\nCustomer: ${name}\nCountry: ${country}\nAddress:\n${address}\n\nItems:\n${itemLines}\n\nShipping: €${shipping.toFixed(2)}\nTotal: €${total.toFixed(2)}`;
+
+            window.location.href = 'mailto:Breatnach07@gmail.com?subject=New Order – ' + encodeURIComponent(name) + '&body=' + encodeURIComponent(body);
+
+            clearBasket();
+            document.getElementById('checkout-modal').classList.remove('open');
         }
 
         updateCount();
